@@ -1,35 +1,54 @@
 package com.kashsoft.insta
 
 import android.os.Bundle
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.kashsoft.insta.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var textview: TextView
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.nav_home -> {
+            textview.setText("Home")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_search -> {
+                textview.setText("Search")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_add_post -> {
+                textview.setText("Add Post")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_notifications -> {
+                textview.setText("Notifications")
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_profile -> {
+            textview.setText("Profile")
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+
+        false
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        textview = findViewById(R.id.messeges)
     }
+
+
+
 }
