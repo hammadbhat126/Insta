@@ -4,35 +4,47 @@ import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
+import com.kashsoft.insta.Fragments.HomeFragment
+import com.kashsoft.insta.Fragments.NotificationsFragment
+import com.kashsoft.insta.Fragments.ProfileFragment
+import com.kashsoft.insta.Fragments.SearchFragment
 
 
 class MainActivity : AppCompatActivity() {
+    internal  var selectedFragment: Fragment? = null
 
-    private lateinit var textview: TextView
+
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_home -> {
-            textview.setText("Home")
-                return@OnNavigationItemSelectedListener true
+            selectedFragment = HomeFragment()
             }
             R.id.nav_search -> {
-                textview.setText("Search")
-                return@OnNavigationItemSelectedListener true
+
+                selectedFragment = SearchFragment()
             }
             R.id.nav_add_post -> {
-                textview.setText("Add Post")
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications -> {
-                textview.setText("Notifications")
-                return@OnNavigationItemSelectedListener true
+
+                selectedFragment = NotificationsFragment()
             }
             R.id.nav_profile -> {
-            textview.setText("Profile")
-                return@OnNavigationItemSelectedListener true
+
+                selectedFragment = ProfileFragment()
             }
         }
+        if (selectedFragment !=null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragmrnt_container,
+                selectedFragment!!
 
+            ) .commit()
+        }
         false
     }
 
@@ -46,9 +58,17 @@ class MainActivity : AppCompatActivity() {
 
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        textview = findViewById(R.id.messeges)
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragmrnt_container,
+            HomeFragment()
+
+        ) .commit()
+
+
+
+        }
+
     }
 
 
 
-}
