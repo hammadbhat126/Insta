@@ -101,49 +101,9 @@
                             android:layout_gravity="center"
                             android:orientation="vertical" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Posts"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/black"
-                                />
-
 
                             <TextView
                                 android:id="@+id/total_posts"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                            android:text="0"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/black"
-                                />
-
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="7dp"
-                            android:layout_gravity="center"
-                            android:orientation="vertical" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Fallowers"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/black"
-                                />
-
-
-                            <TextView
-                                android:id="@+id/total_fallowers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
@@ -151,6 +111,16 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/black"
                                 />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Posts"
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                />
+
+
+
 
 
 
@@ -162,17 +132,36 @@
                             android:layout_marginLeft="7dp"
                             android:layout_gravity="center"
                             android:orientation="vertical" >
-
+                            <TextView
+                                android:id="@+id/total_fallowers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Fallowing"
+                                android:text="Fallowers"
                                 android:textSize="12sp"
-                                android:textStyle="bold"
                                 android:textColor="@color/black"
                                 />
 
 
+
+
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp"
+                            android:layout_gravity="center"
+                            android:orientation="vertical" >
                             <TextView
                                 android:id="@+id/total_fallowing"
                                 android:layout_width="wrap_content"
@@ -182,6 +171,16 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/black"
                                 />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fallowing"
+                                android:textSize="12sp"
+                                android:textColor="@color/black"
+                                />
+
+
+
 
 
 
@@ -189,9 +188,78 @@
 
 
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/edit_account_setting"
+                        android:background="@drawable/buttons_background"
+                        android:layout_marginTop="2dp"
+                        android:textAllCaps="false"
+                        android:text="Edit Profile"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="170dp"
+                        android:layout_height="32dp"/>
+
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/mid_bar"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/full_name_profile_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full Name"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    />
+                <TextView
+                    android:id="@+id/bio_profile_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bio"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_black_background"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/images_grid_view"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/grid"
+                    android:layout_weight="1"
+                    style="?android:attr/buttonBarButtonStyle"/>
+
+                <ImageButton
+                    android:id="@+id/images_save_btn"
+                    android:layout_width="1dp"
+                    android:layout_height="49dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/save_large_icon"
+                    android:layout_weight="1"
+
+                    style="?android:attr/buttonBarButtonStyle"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
