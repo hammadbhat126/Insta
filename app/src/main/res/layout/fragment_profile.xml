@@ -190,7 +190,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/edit_account_setting"
+                        android:id="@+id/edit_account_setting_btn"
                         android:background="@drawable/buttons_background"
                         android:layout_marginTop="2dp"
                         android:textAllCaps="false"
