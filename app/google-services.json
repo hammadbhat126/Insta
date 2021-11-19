@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "561219564415",
+    "project_id": "my-project-1554304913445",
+    "storage_bucket": "my-project-1554304913445.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561219564415:android:568596f05cb594f906e04a",
+        "android_client_info": {
+          "package_name": "com.app.mynews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561219564415-cplsvulnpedchbdn8q5n2n10pu11vglp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDthedlZfO6f-5YSIK2SAdw5fd4tvnQw6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561219564415-cplsvulnpedchbdn8q5n2n10pu11vglp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561219564415:android:857173793ea9263d06e04a",
+        "android_client_info": {
+          "package_name": "com.kashsoft.insta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561219564415-cplsvulnpedchbdn8q5n2n10pu11vglp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDthedlZfO6f-5YSIK2SAdw5fd4tvnQw6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561219564415-cplsvulnpedchbdn8q5n2n10pu11vglp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
