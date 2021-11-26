@@ -6,7 +6,6 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_account_setting.xml" value="0.23249299719887956" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_sign_in.xml" value="0.33" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_home.xml" value="0.10526315789473684" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_notification.xml" value="0.1" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
@@ -14,7 +13,9 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/Insta/app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/button_black_background.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/drawable/buttons_background.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/activity_account_setting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.296195652173913" />
+        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.3055555555555556" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.13148148148148148" />
       </map>
     </option>
