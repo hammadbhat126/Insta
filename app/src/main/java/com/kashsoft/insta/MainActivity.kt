@@ -1,16 +1,15 @@
 package com.kashsoft.insta
 
 import android.os.Bundle
-import android.widget.TextView
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
+
 import com.kashsoft.insta.Fragments.HomeFragment
 import com.kashsoft.insta.Fragments.NotificationsFragment
 import com.kashsoft.insta.Fragments.ProfileFragment
 import com.kashsoft.insta.Fragments.SearchFragment
-
 class MainActivity : AppCompatActivity() {
 
 
