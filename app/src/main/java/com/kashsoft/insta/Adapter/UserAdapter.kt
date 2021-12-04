@@ -61,48 +61,58 @@ class UserAdapter (private var mContext: Context,
         holder.followButton.setOnClickListener {
             if(holder.followButton.text.toString() == "Follow")
             {
-                firebaseUser?.uid.let { it1 ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Follow").child(it1.toString())
-                        .child("Following").child(user.getUID())
-                        .setValue(true).addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                firebaseUser?.uid.let { it ->
-                                    FirebaseDatabase.getInstance().reference
-                                        .child("Follow").child(user.getUID())
-                                        .child("Followers").child(it.toString())
-                                        .setValue(true).addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
+               firebaseUser?.uid.let { it1 ->
+                   FirebaseDatabase. getInstance().reference
+                       .child("Follow").child(it1.toString())
+                       .child("Following").child(user.getUID())
+                       .setValue(true).addOnCompleteListener{task ->
+                           if (task.isSuccessful)
 
-                                            }
-                                        }
-                                }
-                            }
-                        }
-                }
+                           {
+                               firebaseUser?.uid.let { it1 ->
+                                   FirebaseDatabase.getInstance().reference
+                                       .child("Follow").child(user.getUID())
+                                       .child("Followers").child(user.toString())
+                                       .setValue(task).addOnCompleteListener{task ->
+                                           if (task.isSuccessful)
+                                           {
+
+                                           }
+                                       }
+
+                               }
+                           }
+                       }
+               }
             }
-            else
-            {
+            else{
+
                 firebaseUser?.uid.let { it1 ->
-                    FirebaseDatabase.getInstance().reference
+                    FirebaseDatabase. getInstance().reference
                         .child("Follow").child(it1.toString())
                         .child("Following").child(user.getUID())
-                        .removeValue().addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
+                        .removeValue().addOnCompleteListener{task ->
+                            if (task.isSuccessful)
+
+                            {
                                 firebaseUser?.uid.let { it1 ->
                                     FirebaseDatabase.getInstance().reference
                                         .child("Follow").child(user.getUID())
-                                        .child("Followers").child(it1.toString())
-                                        .removeValue().addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
+                                        .child("Followers").child(user.toString())
+                                        .removeValue().addOnCompleteListener{task ->
+                                            if (task.isSuccessful)
+                                            {
 
                                             }
                                         }
+
                                 }
                             }
                         }
                 }
+
             }
+
         }
     }
 
@@ -130,14 +140,14 @@ class UserAdapter (private var mContext: Context,
         {
             override fun onDataChange(datasnapshot: DataSnapshot)
             {
+
                 if (datasnapshot.child(uid).exists())
                 {
-                    followButton.text = "Following"
-                }
-                else
-                {
+                    followButton.text ="Following"
+                }else{
                     followButton.text = "Follow"
                 }
+
             }
 
             override fun onCancelled(p0: DatabaseError) {

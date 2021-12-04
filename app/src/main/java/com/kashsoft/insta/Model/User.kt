@@ -1,85 +1,79 @@
 package com.kashsoft.insta.Model
 
 
-
 class User
-
 {
-    private var username : String = ""
-    private var fullname : String = ""
-    private var bio : String = ""
-    private var image : String = ""
-    private var uid : String = ""
+    private var username: String = ""
+    private var fullname: String = ""
+    private var bio: String = ""
+    private var image: String = ""
+    private var uid: String = ""
+
 
     constructor()
 
-    constructor(username: String, fullname : String, bio :String, image: String , uid:String)
 
+    constructor(username: String, fullname: String, bio: String, image: String, uid: String)
     {
         this.username = username
         this.fullname = fullname
         this.bio = bio
-        this.uid = uid
         this.image = image
+        this.uid = uid
     }
 
-fun getUsername(): String
-{
-    return username
-}
-    fun setUsername(username: String): String
+
+    fun getUsername(): String
     {
-        return username
+        return  username
     }
 
-
+    fun setUsername(username: String)
+    {
+        this.username = username
+    }
 
 
     fun getFullname(): String
     {
-        return fullname
+        return  fullname
     }
-    fun setFullname(fullname: String): String
+
+    fun setFullname(fullname: String)
     {
-        return fullname
+        this.fullname = fullname
     }
-
-
 
 
     fun getBio(): String
     {
-        return bio
+        return  bio
     }
-    fun setBio(bio: String): String
+
+    fun setBio(bio: String)
     {
-        return bio
+        this.bio = bio
     }
-
-
 
 
     fun getImage(): String
     {
-        return image
-    }
-    fun setImage(image:  String): String
-    {
-        return image
+        return  image
     }
 
+    fun setImage(image: String)
+    {
+        this.image = image
+    }
 
 
     fun getUID(): String
     {
-        return uid
+        return  uid
     }
-    fun setUID(uid:  String): String
+
+    fun setUID(uid: String)
     {
-        return uid
+        this.uid = uid
     }
-
-
-
-
 }

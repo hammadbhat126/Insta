@@ -44,7 +44,7 @@ private const val ARG_PARAM2 = "param2"
         val view = inflater.inflate(R.layout.fragment_search, container, false)
 
 
-        recyclerView = view.findViewById(R.id.recyler_view_search)
+        recyclerView = view.findViewById(R.id.recycler_view_search)
         recyclerView?.setHasFixedSize(true)
         recyclerView?.layoutManager = LinearLayoutManager(context)
 
