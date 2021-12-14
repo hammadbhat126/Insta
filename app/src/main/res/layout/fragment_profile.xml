@@ -75,7 +75,7 @@
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image_profile_fragment"
+                    android:id="@+id/pro_image_profile_fragment"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:src="@drawable/profile"
@@ -191,13 +191,13 @@
 
                     <Button
                         android:id="@+id/edit_account_setting_btn"
-                        android:background="@drawable/buttons_background"
-                        android:layout_marginTop="2dp"
-                        android:textAllCaps="false"
-                        android:text="Edit Profile"
-                        android:layout_marginLeft="10dp"
                         android:layout_width="170dp"
-                        android:layout_height="32dp"/>
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/buttons_background"
+                        android:text="Edit Profile"
+                        android:textAllCaps="false" />
 
                 </LinearLayout>
             </LinearLayout>
