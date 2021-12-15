@@ -67,14 +67,13 @@
         android:id="@+id/change_image_text_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Image"
+        android:layout_below="@id/profile_image_view_profile_frag"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:text="Change Image"
         android:textColor="@color/colorPrimary"
-        android:layout_below="@id/profile_image_view_profile_frag"
-        />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/full_name_profile_frag"
