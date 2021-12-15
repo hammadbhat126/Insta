@@ -64,7 +64,36 @@ class ProfileFragment : Fragment() {
             checkFollowAndFollowButtonStatus()
         }
         view.edit_account_setting_btn.setOnClickListener {
-            startActivity(Intent(context, AccountSettingActivity::class.java))
+            val getButtonText = view.edit_account_setting_btn.text.toString()
+            when{
+                getButtonText =="Edit Profile" -> startActivity(Intent(context, AccountSettingActivity::class.java))
+                getButtonText =="Follow" -> {
+                    firebaseUser?.uid.let { it1 ->
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(it1.toString())
+                            .child("Following").child(profileId).setValue(true)
+                    }
+                    firebaseUser?.uid.let { it1 ->
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(profileId)
+                            .child("Followers").child(it1.toString())
+                    }
+                }
+
+                getButtonText =="Following" -> {
+                    firebaseUser?.uid.let { it1 ->
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(it1.toString())
+                            .child("Following").child(profileId).removeValue()
+                    }
+                    firebaseUser?.uid.let { it1 ->
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(profileId)
+                            .child("Followers").child(it1.toString()).removeValue()
+                    }
+                }
+            }
+
 
         }
 
@@ -172,10 +201,8 @@ class ProfileFragment : Fragment() {
         {
             override fun onDataChange(po: DataSnapshot) {
 
-            //    if (context!= null)
-            //    {
-            //        return
-           //     }
+
+
                 if (po.exists()){
                     val user = po.getValue<User>(User::class.java)
 

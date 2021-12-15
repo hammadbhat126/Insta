@@ -58,10 +58,10 @@
         android:id="@+id/profile_image_view_profile_frag"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_below="@id/app_bar_layout_profile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:src="@drawable/profile"
-        android:layout_below="@id/app_bar_layout_profile"/>
+        android:src="@drawable/profile" />
 
     <TextView
         android:id="@+id/change_image_text_btn"
@@ -80,12 +80,12 @@
         android:id="@+id/full_name_profile_frag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_below="@id/change_image_text_btn"
+        android:layout_below="@id/change_image_text_btn"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="16dp"
-        android:inputType="text"
-        android:hint="Full Name"/>
+        android:layout_marginRight="20dp"
+        android:hint="Full Name"
+        android:inputType="text" />
 
 
     <EditText
@@ -94,11 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/full_name_profile_frag"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="16dp"
-        android:inputType="text"
+        android:layout_marginRight="20dp"
         android:hint="Username"
-        />
+        android:inputType="text" />
 
 
     <EditText
@@ -107,11 +106,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/user_name_profile_frag"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="16dp"
-        android:inputType="text"
+        android:layout_marginRight="20dp"
         android:hint="Bio"
-        />
+        android:inputType="text" />
 
 
     <Button
