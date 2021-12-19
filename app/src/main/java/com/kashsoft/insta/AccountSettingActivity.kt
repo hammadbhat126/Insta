@@ -97,7 +97,7 @@ class AccountSettingActivity : AppCompatActivity() {
             val result = CropImage.getActivityResult(data)
             imageUri = result.uri
             profile_image_view_profile_frag.setImageURI(imageUri)
-        } else {
+
 
         }
     }
