@@ -7,6 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.kashsoft.insta.Adapter.PostAdapter
+import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,7 +28,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
+private var postAdapter : PostAdapter? = null
 
+    private var postList : MutableList<Post>? = null
+
+    private var followingList: MutableList<Post>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +49,72 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
 
 
+        postList = ArrayList()
+        postAdapter = context?.let { PostAdapter(it,postList as ArrayList<Post>) }
+        recyclerView.adapter = postAdapter
+
+
 
         return view
 
 
     }
 
+   private fun checkFollowings(){
+       followingList = ArrayList()
+       val followingRef = FirebaseDatabase.getInstance().reference
+               .child("Follow").child(FirebaseAuth.getInstance().currentUser!!.uid)
+               .child("Following")
+       followingRef.addValueEventListener(object : ValueEventListener
+       {
+
+           override fun onDataChange(po: DataSnapshot) {
+             if (po.exists())
+             {
+                 (followingList as ArrayList<String>).clear()
+                 for (snapshot in po.children)
+                 {
+                     snapshot.key?.let { (followingList as ArrayList<String>).add(it)}
+                 }
+
+                 retrevePosts()
+             }
+           }
+
+           override fun onCancelled(error: DatabaseError) {
+               TODO("Not yet implemented")
+           }
+       })
 
 
+       }
+
+    private fun  retrevePosts() {
+        val postsRef = FirebaseDatabase.getInstance().reference.child("Posts")
+        postsRef.addValueEventListener(object :ValueEventListener{
+
+
+            override fun onDataChange(po: DataSnapshot) {
+              postList?.clear()
+                for (snapshot in po.children)
+                {
+                val post = snapshot.getValue(Post::class.java)
+                    for (id in (followingList as ArrayList<String>) )
+                    {
+                        if (post!!.getPublisher() == id){
+                            postList!!.add(post)
+                        }
+                        postAdapter!!.notifyDataSetChanged()
+                    }
+             }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 }
+
+
+

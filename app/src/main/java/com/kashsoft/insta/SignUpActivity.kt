@@ -91,6 +91,15 @@ import kotlinx.android.synthetic.main.activity_sign_up.*class SignUpActivity : A
                     progressDialog.dismiss()
                     Toast.makeText(this, "Account has been created successfully.", Toast.LENGTH_LONG).show()
 
+
+
+                        FirebaseDatabase.getInstance().reference
+                            .child("Follow").child(currentUserID)
+                            .child("Following").child(currentUserID)
+                            .setValue(true)
+
+
+
                     val intent = Intent(this@SignUpActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)

@@ -23,14 +23,14 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_profile_image_search"
+                android:id="@+id/user_profile_image_post"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/profile"
                 android:padding="5dp"/>
 
             <TextView
-                android:id="@+id/user_name_search"
+                android:id="@+id/user_name_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="user name"
@@ -66,28 +66,25 @@
                 android:id="@+id/post_image_like_btn"
                 android:layout_width="41dp"
                 android:layout_height="40dp"
-                android:src="@drawable/heart_not_clicked"
-                />
+                android:src="@drawable/heart_not_clicked" />
 
             <ImageView
                 android:id="@+id/post_image_comment_btn"
                 android:layout_width="40dp"
                 android:layout_height="34dp"
-                android:src="@drawable/comment"
-                android:layout_toEndOf="@+id/post_image_like_btn"
-                android:layout_marginTop="3dp"
                 android:layout_marginStart="6dp"
-                />
+                android:layout_marginTop="3dp"
+                android:layout_toEndOf="@+id/post_image_like_btn"
+                android:src="@drawable/comment" />
 
             <ImageView
                 android:id="@+id/post_save_comment_btn"
                 android:layout_width="40dp"
                 android:layout_height="39dp"
-                android:src="@drawable/save_unfilled_large_icon"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="3dp"
-                />
+                android:src="@drawable/save_unfilled_large_icon" />
 
         </RelativeLayout>
 
