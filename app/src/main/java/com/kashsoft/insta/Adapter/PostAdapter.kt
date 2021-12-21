@@ -1,6 +1,7 @@
 package com.kashsoft.insta.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.kashsoft.insta.MainActivity
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
@@ -46,16 +48,44 @@ private var firebaseUser: FirebaseUser?= null
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         val post = mPost[position]
+
         Picasso.get().load(post.getPostimage()).into(holder.postImage)
+        if (post.getDescription().equals(""))
+        {
+            holder.description.visibility == View.GONE
+        }else{
+            holder.description.visibility = View.VISIBLE
+            holder.description.setText(post.getDescription())
+        }
         publisherInfo(holder.profileImage, holder.userName, holder.publisher, post.getPublisher())
-    
+// likes method
+        isLikes(post.getPostid(), holder.likeButton)
+// retrieve total no of like on specific post and display (method)
+
+        numberOfLikes(holder.likes, post.getPostid())
+
 
         holder.likeButton.setOnClickListener {
             if (holder.likeButton.tag == "Like")
-
             {
+                FirebaseDatabase.getInstance().reference
+                    .child("Likes")
+                    .child(post.getPostid())
+                    .child(firebaseUser!!.uid)
+                    .setValue(true)
 
-            }else{
+            }else
+            {
+                FirebaseDatabase.getInstance().reference
+                    .child("Likes")
+                    .child(post.getPostid())
+                    .child(firebaseUser!!.uid)
+                    .removeValue()
+
+                val intent = Intent(mContext, MainActivity::class.java)
+                mContext.startActivity(intent)
+
+
 
             }
         }
@@ -63,6 +93,68 @@ private var firebaseUser: FirebaseUser?= null
     
     }
 
+    private fun numberOfLikes(likes: TextView, postid: String)
+    {
+
+
+        val LikesRef =   FirebaseDatabase.getInstance().reference
+            .child("Likes").child(postid)
+
+        LikesRef.addValueEventListener(object :ValueEventListener
+        {
+
+            override fun onDataChange(po: DataSnapshot)
+            {
+
+                if (po.exists()){
+
+                    likes.text =po.childrenCount.toString() + "Likes"
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError)
+            {
+
+            }
+        })
+
+    }
+
+    private fun isLikes(postid: String, likeButton: ImageView)
+    {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val LikesRef =   FirebaseDatabase.getInstance().reference
+            .child("Likes").child(postid)
+
+        LikesRef.addValueEventListener(object :ValueEventListener
+        {
+
+            override fun onDataChange(po: DataSnapshot)
+            {
+
+                if (po.child(firebaseUser!!.uid).exists())
+                {
+                    likeButton.setImageResource(R.drawable.heart_clicked)
+                    likeButton.tag = "Liked"
+
+                }else{
+                    likeButton.setImageResource(R.drawable.heart_not_clicked)
+                    likeButton.tag = "Like"
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError)
+            {
+
+            }
+        })
+
+
+
+
+    }
 
 
     inner class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -94,7 +186,7 @@ private var firebaseUser: FirebaseUser?= null
         }
 
     }
-// notes
+
     private fun publisherInfo(profileImage: CircleImageView, userName: TextView,
                               publisher: TextView, publisherID: String) {
 
