@@ -13,11 +13,12 @@ class Post {
     constructor()
 
 
-    constructor(postid: String, publisher: String, description: String, postimage: String) {
+    constructor(postid: String, postimage: String, publisher: String, description: String ) {
         this.postid = postid
+        this.postimage = postimage
         this.publisher = publisher
         this.description = description
-        this.postimage = postimage
+
     }
 
 
@@ -26,7 +27,7 @@ class Post {
         return postid
     }
 
-    fun getPostImage() : String{
+    fun getPostimage() : String{
 
         return postimage
     }
@@ -45,13 +46,18 @@ class Post {
 
     }
 
+
+
+    // setters
+
+
     fun setPostid(postid: String){
 
 
     this.postid = postid
 }
 
-    fun setPostImage(postimage: String){
+    fun setPostimage(postimage: String){
 
 
         this.postimage = postimage

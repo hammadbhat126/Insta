@@ -10,7 +10,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.android.synthetic.main.activity_sign_up.*class SignUpActivity : AppCompatActivity() {
+import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.util.*
+import kotlin.collections.HashMap
+
+class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +82,8 @@ import kotlinx.android.synthetic.main.activity_sign_up.*class SignUpActivity : A
 
         val userMap = HashMap<String, Any>()
         userMap["uid"] = currentUserID
-        userMap["fullname"] = fullName.toLowerCase()
-        userMap["username"] = userName.toLowerCase()
+        userMap["fullname"] = fullName.lowercase(Locale.getDefault())
+        userMap["username"] = userName.lowercase(Locale.getDefault())
         userMap["email"] = email
         userMap["bio"] = "hey i am using Coding Cafe Instagram Clone App."
         userMap["image"] = "https://firebasestorage.googleapis.com/v0/b/instagram-clone-app-ec78a.appspot.com/o/Default%20Images%2Fprofile.png?alt=media&token=aac2c4a5-5e20-4390-bded-ef05d53b9348"

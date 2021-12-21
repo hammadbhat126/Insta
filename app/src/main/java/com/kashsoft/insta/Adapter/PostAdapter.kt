@@ -24,10 +24,13 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_account_setting.*
 
-class PostAdapter(private  val mContext: Context,
+class PostAdapter
+    (private  val mContext: Context,
                   private val mPost: List <Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
 private var firebaseUser: FirebaseUser?= null
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.posts_layout, parent, false)
         return ViewHolder(view)
@@ -43,8 +46,21 @@ private var firebaseUser: FirebaseUser?= null
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         val post = mPost[position]
-        Picasso.get().load(post.getPostImage()).into(holder.postImage)
+        Picasso.get().load(post.getPostimage()).into(holder.postImage)
         publisherInfo(holder.profileImage, holder.userName, holder.publisher, post.getPublisher())
+    
+
+        holder.likeButton.setOnClickListener {
+            if (holder.likeButton.tag == "Like")
+
+            {
+
+            }else{
+
+            }
+        }
+
+    
     }
 
 
@@ -78,12 +94,14 @@ private var firebaseUser: FirebaseUser?= null
         }
 
     }
+// notes
+    private fun publisherInfo(profileImage: CircleImageView, userName: TextView,
+                              publisher: TextView, publisherID: String) {
 
-    private fun publisherInfo(profileImage: CircleImageView, userName: TextView, publisher: TextView, publisherID: String) {
 
-
-        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(publisherID)
-        userRef.addValueEventListener(object : ValueEventListener
+        val usersRef = FirebaseDatabase.getInstance().reference.child("Users")
+            .child(publisherID)
+        usersRef.addValueEventListener(object : ValueEventListener
 
         {
             override fun onDataChange(po: DataSnapshot)

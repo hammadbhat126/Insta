@@ -50,10 +50,10 @@ private var postAdapter : PostAdapter? = null
 
 
         postList = ArrayList()
-        postAdapter = context?.let { PostAdapter(it,postList as ArrayList<Post>) }
+        postAdapter = context?.let { PostAdapter(it, postList as ArrayList<Post>) }
         recyclerView.adapter = postAdapter
 
-
+        checkFollowings()
 
         return view
 
@@ -96,9 +96,11 @@ private var postAdapter : PostAdapter? = null
 
             override fun onDataChange(po: DataSnapshot) {
               postList?.clear()
+
                 for (snapshot in po.children)
                 {
                 val post = snapshot.getValue(Post::class.java)
+          // notes
                     for (id in (followingList as ArrayList<String>) )
                     {
                         if (post!!.getPublisher() == id){
