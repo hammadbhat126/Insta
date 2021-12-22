@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.kashsoft.insta.CommentsActivity
 import com.kashsoft.insta.MainActivity
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
@@ -52,7 +53,7 @@ private var firebaseUser: FirebaseUser?= null
         Picasso.get().load(post.getPostimage()).into(holder.postImage)
         if (post.getDescription().equals(""))
         {
-            holder.description.visibility == View.GONE
+            holder.description.visibility = View.GONE
         }else{
             holder.description.visibility = View.VISIBLE
             holder.description.setText(post.getDescription())
@@ -90,6 +91,18 @@ private var firebaseUser: FirebaseUser?= null
             }
         }
 
+
+        //  Comment on Pictures
+                holder.commentButton.setOnClickListener {
+                    val intentComment = Intent(mContext, CommentsActivity::class.java)
+                   intentComment.putExtra("postId", post.getPostid())
+                    intentComment.putExtra("publisherId", post.getPublisher())
+
+
+
+                    mContext.startActivity(intentComment)
+                }
+
     
     }
 
@@ -98,7 +111,7 @@ private var firebaseUser: FirebaseUser?= null
 
 
         val LikesRef =   FirebaseDatabase.getInstance().reference
-            .child("Likes").child(postid)
+            .child("  Likes").child(postid)
 
         LikesRef.addValueEventListener(object :ValueEventListener
         {

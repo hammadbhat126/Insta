@@ -152,11 +152,11 @@ class AccountSettingActivity : AppCompatActivity() {
                 if (po.exists()) {
                     val user = po.getValue<User>(User::class.java)
 
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
-                        .into(profile_image_view_profile_frag)
+                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profile_image_view_profile_frag)
                     user_name_profile_frag.setText(user!!.getUsername())
-                    full_name_profile_frag?.setText(user!!.getFullname())
+                    full_name_profile_frag.setText(user!!.getFullname())
                     bio_profile_frag.setText(user!!.getBio())
+
 
                 }
             }
