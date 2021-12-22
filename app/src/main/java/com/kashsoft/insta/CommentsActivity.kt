@@ -32,19 +32,24 @@ class CommentsActivity : AppCompatActivity() {
 
         // check if bug occurs on launch
         postId = intent.getStringExtra("postId").toString()
+
         publisherId = intent.getStringExtra("publisherId").toString()
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-
+        addComment()
         userInfo()
-        post_comment.setOnClickListener ( View.OnClickListener {
+
+
+        post_comment.setOnClickListener (View.OnClickListener {
             if (add_comment!!.text.toString() == "")
             {
                 Toast.makeText(this@CommentsActivity, "Please write comment first",
                 Toast.LENGTH_LONG).show()
             }
-            else{
+            else
+            {
+                addComment()
 
             }
         } )
@@ -59,8 +64,8 @@ class CommentsActivity : AppCompatActivity() {
             .child(postId!!)
 
         val commentsMap = HashMap<String, Any>()
-        commentsMap["comment"] =add_comment!!.text.toString()
-        commentsMap["publisher"] =firebaseUser!!.uid
+        commentsMap["comment"] = add_comment!!.text.toString()
+        commentsMap["publisher"] = firebaseUser!!.uid
 
         commentsRef.push().setValue(commentsMap)
         add_comment!!.text.clear()

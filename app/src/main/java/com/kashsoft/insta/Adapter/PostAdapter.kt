@@ -64,6 +64,7 @@ private var firebaseUser: FirebaseUser?= null
 // retrieve total no of like on specific post and display (method)
 
         numberOfLikes(holder.likes, post.getPostid())
+        getTotalComments(holder.comments, post.getPostid())
 
 
         holder.likeButton.setOnClickListener {
@@ -90,39 +91,34 @@ private var firebaseUser: FirebaseUser?= null
 
             }
         }
-//notes
-
-
         //  Comment on Pictures
                 holder.commentButton.setOnClickListener {
                     val intentComment = Intent(mContext, CommentsActivity::class.java)
-                   intentComment.putExtra("postId", post.getPostid())
+                    intentComment.putExtra("postId", post.getPostid())
                     intentComment.putExtra("publisherId", post.getPublisher())
-
-
-
                     mContext.startActivity(intentComment)
                 }
+        holder.comments.setOnClickListener {
+            val intentComment = Intent(mContext, CommentsActivity::class.java)
+            intentComment.putExtra("postId", post.getPostid())
+            intentComment.putExtra("publisherId", post.getPublisher())
+            mContext.startActivity(intentComment)
+        }
 
-    
     }
-
     private fun numberOfLikes(likes: TextView, postid: String)
     {
-
-
-        val LikesRef =   FirebaseDatabase.getInstance().reference
+    val LikesRef =   FirebaseDatabase.getInstance().reference
             .child("  Likes").child(postid)
 
         LikesRef.addValueEventListener(object :ValueEventListener
         {
-
             override fun onDataChange(po: DataSnapshot)
             {
 
                 if (po.exists()){
 
-                    likes.text =po.childrenCount.toString() + "Likes"
+                    likes.text =po.childrenCount.toString() + "  likes"
                 }
 
             }
@@ -135,6 +131,30 @@ private var firebaseUser: FirebaseUser?= null
 
     }
 
+
+    private fun getTotalComments(comments : TextView, postid: String)
+    {
+    val commentsRef =   FirebaseDatabase.getInstance().reference
+            .child("  Comments").child(postid)
+        commentsRef.addValueEventListener(object :ValueEventListener
+        {
+            override fun onDataChange(po: DataSnapshot)
+            {
+
+                if (po.exists()){
+
+                    comments.text ="view all"+  po.childrenCount.toString() + "  comments"
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError)
+            {
+
+            }
+        })
+
+    }
     private fun isLikes(postid: String, likeButton: ImageView)
     {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -177,14 +197,11 @@ private var firebaseUser: FirebaseUser?= null
         var likeButton: ImageView
         var commentButton: ImageView
         var saveButton: ImageView
-
-
         var userName: TextView
         var likes: TextView
         var publisher: TextView
         var description: TextView
         var comments : TextView
-
         init {
             profileImage = itemView.findViewById(R.id.user_profile_image_post)
             postImage = itemView.findViewById(R.id.post_image_home)
@@ -195,7 +212,7 @@ private var firebaseUser: FirebaseUser?= null
             likes = itemView.findViewById(R.id.likes)
             publisher = itemView.findViewById(R.id.publisher)
             description = itemView.findViewById(R.id.description)
-            comments = itemView.findViewById(R.id.comments)
+            comments = itemView.findViewById(R.id.all_comments)
 
         }
 
@@ -203,19 +220,15 @@ private var firebaseUser: FirebaseUser?= null
 
     private fun publisherInfo(profileImage: CircleImageView, userName: TextView,
                               publisher: TextView, publisherID: String) {
-
-
-        val usersRef = FirebaseDatabase.getInstance().reference.child("Users")
+      val usersRef = FirebaseDatabase.getInstance().reference.child("Users")
             .child(publisherID)
         usersRef.addValueEventListener(object : ValueEventListener
-
         {
             override fun onDataChange(po: DataSnapshot)
             {
               if (po.exists())
               {
                   val user = po.getValue<User>(User::class.java)
-
                   Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
                       .into(profileImage)
                   userName.text = user!!.getUsername()
