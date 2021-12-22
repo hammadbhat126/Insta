@@ -37,7 +37,7 @@ class CommentsActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        addComment()
+
         userInfo()
 
 
@@ -60,7 +60,8 @@ class CommentsActivity : AppCompatActivity() {
 
     private fun addComment()
     {
-        val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments")
+        val commentsRef = FirebaseDatabase.getInstance().reference
+            .child("Comments")
             .child(postId!!)
 
         val commentsMap = HashMap<String, Any>()
@@ -78,9 +79,8 @@ class CommentsActivity : AppCompatActivity() {
 
         usersRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(po: DataSnapshot) {
-
-
-                if (po.exists()) {
+                if (po.exists())
+                {
                     val user = po.getValue<User>(User::class.java)
 
                     Picasso.get().load(user!!.getImage())
