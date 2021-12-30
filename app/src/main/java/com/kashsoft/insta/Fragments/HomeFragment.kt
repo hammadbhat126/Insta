@@ -77,7 +77,7 @@ private var postAdapter : PostAdapter? = null
                      snapshot.key?.let { (followingList as ArrayList<String>).add(it)}
                  }
 
-                 retrevePosts()
+                 retrievePosts()
              }
            }
 
@@ -89,7 +89,7 @@ private var postAdapter : PostAdapter? = null
 
        }
 
-    private fun  retrevePosts() {
+    private fun  retrievePosts() {
         val postsRef = FirebaseDatabase.getInstance().reference.child("Posts")
         postsRef.addValueEventListener(object :ValueEventListener{
 
@@ -101,9 +101,10 @@ private var postAdapter : PostAdapter? = null
                 {
                 val post = snapshot.getValue(Post::class.java)
           // notes
-                    for (id in (followingList as ArrayList<String>) )
+                    for (id in followingList as ArrayList<String> )
                     {
-                        if (post!!.getPublisher() == id){
+                        if (post!!.getPublisher() == id)
+                        {
                             postList!!.add(post)
                         }
                         postAdapter!!.notifyDataSetChanged()

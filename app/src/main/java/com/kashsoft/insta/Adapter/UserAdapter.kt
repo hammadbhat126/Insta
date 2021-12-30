@@ -72,7 +72,7 @@ class UserAdapter (private var mContext: Context,
                                firebaseUser?.uid.let { it1 ->
                                    FirebaseDatabase.getInstance().reference
                                        .child("Follow").child(user.getUID())
-                                       .child("Followers").child(user.toString())
+                                       .child("Followers").child(it1.toString())
                                        .setValue(task).addOnCompleteListener{task ->
                                            if (task.isSuccessful)
                                            {
