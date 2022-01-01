@@ -1,9 +1,11 @@
 package com.kashsoft.insta
 
-import androidx.appcompat.app.AppCompatActivity
+import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -11,6 +13,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.kashsoft.insta.Adapter.CommentAdapter
+import com.kashsoft.insta.Model.Comment
 import com.kashsoft.insta.Model.User
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_account_setting.*
@@ -22,6 +26,11 @@ class CommentsActivity : AppCompatActivity() {
     private var postId = ""
     private var publisherId = ""
     private var firebaseUser :FirebaseUser? = null
+    private var commentAdapter : CommentAdapter?= null
+    private var commentList: MutableList<Comment>? = null
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +46,14 @@ class CommentsActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
+        var recyclerView:RecyclerView
+        recyclerView = findViewById(R.id.recycler_view_comments)
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.reverseLayout = true
+        recyclerView.layoutManager = linearLayoutManager
 
+        commentList = ArrayList()
+        commentAdapter = CommentAdapter(this, commentList)
         userInfo()
 
 
