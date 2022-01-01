@@ -51,12 +51,12 @@ private var firebaseUser: FirebaseUser?= null
         val post = mPost[position]
 
         Picasso.get().load(post.getPostimage()).into(holder.postImage)
-        if (post.getDescription().equals(""))
+        if (post.getDescription() == "")
         {
             holder.description.visibility = View.GONE
         }else{
             holder.description.visibility = View.VISIBLE
-            holder.description.setText(post.getDescription())
+            holder.description.text = post.getDescription()
         }
         publisherInfo(holder.profileImage, holder.userName, holder.publisher, post.getPublisher())
 // likes method
@@ -108,8 +108,8 @@ private var firebaseUser: FirebaseUser?= null
     }
     private fun numberOfLikes(likes: TextView, postid: String)
     {
-    val LikesRef =   FirebaseDatabase.getInstance().reference
-            .child("  Likes").child(postid)
+    val LikesRef = FirebaseDatabase.getInstance().reference
+            .child("Likes").child(postid)
 
         LikesRef.addValueEventListener(object :ValueEventListener
         {
@@ -118,7 +118,7 @@ private var firebaseUser: FirebaseUser?= null
 
                 if (po.exists()){
 
-                    likes.text =po.childrenCount.toString() + "  likes"
+                    likes.text =po.childrenCount.toString() + "likes"
                 }
 
             }
@@ -135,7 +135,7 @@ private var firebaseUser: FirebaseUser?= null
     private fun getTotalComments(comments : TextView, postid: String)
     {
     val commentsRef =   FirebaseDatabase.getInstance().reference
-            .child("  Comments").child(postid)
+            .child("Comments").child(postid)
         commentsRef.addValueEventListener(object :ValueEventListener
         {
             override fun onDataChange(po: DataSnapshot)
@@ -143,7 +143,7 @@ private var firebaseUser: FirebaseUser?= null
 
                 if (po.exists()){
 
-                    comments.text ="view all"+  po.childrenCount.toString() + "  comments"
+                    comments.text ="view all"+  po.childrenCount.toString() + "comments"
                 }
 
             }
@@ -158,7 +158,7 @@ private var firebaseUser: FirebaseUser?= null
     private fun isLikes(postid: String, likeButton: ImageView)
     {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-        val LikesRef =   FirebaseDatabase.getInstance().reference
+        val LikesRef = FirebaseDatabase.getInstance().reference
             .child("Likes").child(postid)
 
         LikesRef.addValueEventListener(object :ValueEventListener
@@ -231,8 +231,8 @@ private var firebaseUser: FirebaseUser?= null
                   val user = po.getValue<User>(User::class.java)
                   Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
                       .into(profileImage)
-                  userName.text = user!!.getUsername()
-                  publisher.text = user!!.getFullname()
+                  userName.text = user.getUsername()
+                  publisher.text = user.getFullname()
 
 
               }

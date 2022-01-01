@@ -76,10 +76,10 @@ class AddPostActivity : AppCompatActivity() {
                 progressDialog.setMessage("Please wait we are adding your ...")
                 progressDialog.show()
 
-                val fileref = storagePostPicRef!!
+                val fileRef = storagePostPicRef!!
                     .child(System.currentTimeMillis().toString() + ".jpg")
                 var uploadTask: StorageTask<*>
-                uploadTask = fileref.putFile(imageUri!!)
+                uploadTask = fileRef.putFile(imageUri!!)
 
                 uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                     if (task.isSuccessful) {
@@ -88,7 +88,7 @@ class AddPostActivity : AppCompatActivity() {
                             progressDialog.dismiss()
                         }
                     }
-                    return@Continuation fileref.downloadUrl
+                    return@Continuation fileRef.downloadUrl
                 }).addOnCompleteListener(OnCompleteListener<Uri> { task ->
 
                     if (task.isSuccessful) {

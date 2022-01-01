@@ -22,18 +22,9 @@ import com.kashsoft.insta.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
 
 
     private lateinit var profileId: String
@@ -99,7 +90,7 @@ class ProfileFragment : Fragment() {
 
         }
 
-        // call the two methods get followes and get following
+        // call the two methods get followers and get following
         getFollowers()
         getFollowings()
         userInfo()
@@ -142,9 +133,9 @@ class ProfileFragment : Fragment() {
 
     }
 
-    // new method to retrive followers list
+    // new method to retrieve followers list
     private fun getFollowers(){
-
+//note
         val followersRef =  FirebaseDatabase.getInstance().reference
                 .child("Follow").child(profileId)
                 .child("Followers")
@@ -171,7 +162,7 @@ class ProfileFragment : Fragment() {
 
 
     private fun getFollowings(){
-
+//note
         val followersRef = FirebaseDatabase.getInstance().reference
                 .child("Follow").child(profileId)
                 .child("Following")
@@ -203,7 +194,7 @@ class ProfileFragment : Fragment() {
         {
             override fun onDataChange(po: DataSnapshot) {
 
-
+// note 25.40
 
                 if (po.exists()){
                     val user = po.getValue<User>(User::class.java)

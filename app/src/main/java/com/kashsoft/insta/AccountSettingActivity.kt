@@ -92,8 +92,8 @@ class AccountSettingActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK
-            && data != null
-        ) {
+            && data != null)
+        {
             val result = CropImage.getActivityResult(data)
             imageUri = result.uri
             profile_image_view_profile_frag.setImageURI(imageUri)
