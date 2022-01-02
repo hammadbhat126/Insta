@@ -40,9 +40,9 @@ class CommentsActivity : AppCompatActivity() {
         var intent = intent
 
         // check if bug occurs on launch
-        postId = intent.getStringExtra("postId").toString()
+        postId = intent.getStringExtra("postId")!!
 
-        publisherId = intent.getStringExtra("publisherId").toString()
+        publisherId = intent.getStringExtra("publisherId")!!
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
@@ -54,8 +54,11 @@ class CommentsActivity : AppCompatActivity() {
 
         commentList = ArrayList()
         commentAdapter = CommentAdapter(this, commentList)
-        userInfo()
+        recyclerView.adapter = commentAdapter
 
+        userInfo()
+       readComments()
+        getPostImage()
 
         post_comment.setOnClickListener (View.OnClickListener {
             if (add_comment!!.text.toString() == "")
@@ -113,4 +116,58 @@ class CommentsActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun getPostImage() {
+        val postRef = FirebaseDatabase.getInstance().reference.child("Posts")
+            .child(postId!!).child("postimage")
+
+        postRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(po: DataSnapshot) {
+                if (po.exists())
+                {
+                    val image = po.value.toString()
+
+                    Picasso.get().load(image)
+                        .placeholder(R.drawable.profile).into(post_image_comment)
+
+
+
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+private  fun readComments(){
+    val commentsRef = FirebaseDatabase.getInstance().reference
+        .child("Comments")
+        .child(postId)
+
+    commentsRef.addValueEventListener(object : ValueEventListener
+
+    {
+        override fun onDataChange(po: DataSnapshot)
+        {
+                if (po.exists())
+                {
+                        commentList !!.clear()
+                    for (snapshot in po.children)
+                    {
+                            val comment =  snapshot.getValue(Comment::class.java)
+                            commentList!!.add(comment!!)
+                    }
+                    commentAdapter!!.notifyDataSetChanged()
+                }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+    })
+}
 }

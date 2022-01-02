@@ -46,10 +46,10 @@
     <ImageView
         android:id="@+id/post_image_comment"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
         android:layout_height="200dp"
-        android:src="@drawable/profile"
         android:layout_below="@id/app_bar_layout_comments"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
 
         >
 
@@ -91,8 +91,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_toLeftOf="@+id/post_comment"
-            android:layout_toRightOf="@id/profile_image_comment"
+            android:layout_toStartOf="@+id/post_comment"
+            android:layout_toEndOf="@id/profile_image_comment"
             android:hint="Write Your Comment"
             android:padding="8dp"
 
@@ -106,7 +106,7 @@
             android:layout_marginEnd="6dp"
             android:text="Publish"
             android:textColor="@color/colorPrimary"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
 
