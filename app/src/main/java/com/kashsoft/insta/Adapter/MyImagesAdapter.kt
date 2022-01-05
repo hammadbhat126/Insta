@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.NonNull
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.kashsoft.insta.Fragments.PostDetailsFragment
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.R
 import com.squareup.picasso.Picasso
@@ -29,6 +31,15 @@ init {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
    val post: Post = mPost!![position]
         Picasso.get().load(post.getPostimage()).into(holder.postImage)
+
+
+        holder.postImage.setOnClickListener {
+            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE ).edit()
+            editor.putString("posId" , post.getPostid())
+            editor.apply()
+            (mContext as  FragmentActivity).supportFragmentManager.beginTransaction().
+            replace(R.id.fragment_container, PostDetailsFragment()).commit()
+        }
     }
 
     override fun getItemCount(): Int {

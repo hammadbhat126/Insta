@@ -16,22 +16,10 @@ import com.kashsoft.insta.Adapter.PostAdapter
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.new Instance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
 
-private var postAdapter : PostAdapter? = null
-
+    private var postAdapter : PostAdapter? = null
     private var postList : MutableList<Post>? = null
-
     private var followingList: MutableList<Post>? = null
 
     override fun onCreateView(
