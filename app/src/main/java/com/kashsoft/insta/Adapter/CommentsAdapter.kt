@@ -19,7 +19,7 @@ import com.kashsoft.insta.R
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
-class CommentAdapter(private val mContext: Context,
+class CommentAdapter(private val mCoontext: Context,
 
                      private val mComment:MutableList<Comment>?): RecyclerView.Adapter<CommentAdapter.ViewHolder>()
 {
@@ -30,7 +30,7 @@ class CommentAdapter(private val mContext: Context,
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentAdapter.ViewHolder {
-     val view = LayoutInflater.from(mContext).inflate(R.layout.comments_items_layout, parent,false)
+     val view = LayoutInflater.from(mCoontext).inflate(R.layout.comments_items_layout, parent,false)
     return ViewHolder(view)
     }
 

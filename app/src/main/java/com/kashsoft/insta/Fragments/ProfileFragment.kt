@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.kashsoft.insta.AccountSettingActivity
+import com.kashsoft.insta.Adapter.MyImagesAdapter
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
@@ -38,6 +39,7 @@ class ProfileFragment : Fragment() {
 
 
     var postList: List<Post>? =null
+    var myImagesAdapter : MyImagesAdapter?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +76,9 @@ class ProfileFragment : Fragment() {
         recylerViewUploadImages.setHasFixedSize(true)
         val linearLayoutManager : LinearLayoutManager = GridLayoutManager(context, 3)
         recylerViewUploadImages.layoutManager = linearLayoutManager
-
+        postList = ArrayList()
+        myImagesAdapter = context?.let {MyImagesAdapter (it, postList as ArrayList<Post>) }
+        recylerViewUploadImages.adapter = myImagesAdapter
         
         view.edit_account_setting_btn.setOnClickListener {
             val getButtonText = view.edit_account_setting_btn.text.toString()
@@ -114,6 +118,7 @@ class ProfileFragment : Fragment() {
         getFollowers()
         getFollowings()
         userInfo()
+        myPhotos()
         return view
     }
 
@@ -226,6 +231,7 @@ class ProfileFragment : Fragment() {
                            (postList as ArrayList<Post>).add(post)
                        }
                        Collections.reverse(postList)
+                       myImagesAdapter!!.notifyDataSetChanged()
                    }
                }
             }
