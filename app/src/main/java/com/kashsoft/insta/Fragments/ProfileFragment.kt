@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
@@ -17,10 +20,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.kashsoft.insta.AccountSettingActivity
+import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ProfileFragment : Fragment() {
@@ -29,6 +35,10 @@ class ProfileFragment : Fragment() {
 
     private lateinit var profileId: String
     private lateinit var firebaseUser: FirebaseUser
+
+
+    var postList: List<Post>? =null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +66,16 @@ class ProfileFragment : Fragment() {
         } else if (profileId != firebaseUser.uid) {
             checkFollowAndFollowButtonStatus()
         }
+
+
+
+        var recylerViewUploadImages: RecyclerView
+        recylerViewUploadImages = view.findViewById(R.id.recyler_view_upload_pic)
+        recylerViewUploadImages.setHasFixedSize(true)
+        val linearLayoutManager : LinearLayoutManager = GridLayoutManager(context, 3)
+        recylerViewUploadImages.layoutManager = linearLayoutManager
+
+        
         view.edit_account_setting_btn.setOnClickListener {
             val getButtonText = view.edit_account_setting_btn.text.toString()
             when{
@@ -187,6 +207,36 @@ class ProfileFragment : Fragment() {
         })
     }
 
+
+
+    private  fun  myPhotos(){
+        val postsRef = FirebaseDatabase.getInstance().reference.child("Posts")
+
+        postsRef.addValueEventListener(object : ValueEventListener{
+
+            override fun onDataChange(po: DataSnapshot) {
+               if (po.exists())
+               {
+                   (postList as ArrayList<Post>).clear()
+                   for (snapshot in po.children)
+                   {
+                       val post = snapshot.getValue(Post::class.java)!!
+                       if (post.getPublisher().equals(profileId))
+                       {
+                           (postList as ArrayList<Post>).add(post)
+                       }
+                       Collections.reverse(postList)
+                   }
+               }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+    }
     private fun userInfo(){
         val usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(profileId)
 
