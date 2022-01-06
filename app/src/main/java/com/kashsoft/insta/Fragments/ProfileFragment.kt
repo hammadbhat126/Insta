@@ -25,6 +25,7 @@ import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -119,6 +120,7 @@ class ProfileFragment : Fragment() {
         getFollowings()
         userInfo()
         myPhotos()
+        getTotalNumberOfPosts()
         return view
     }
 
@@ -291,4 +293,36 @@ class ProfileFragment : Fragment() {
         pref?.putString("profileId", firebaseUser.uid)
         pref?.apply()
     }
-}
+    private fun getTotalNumberOfPosts()
+    {
+        val postRef = FirebaseDatabase.getInstance().reference.child("Posts")
+        postRef.addValueEventListener(object :ValueEventListener{
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()){
+                    var postCounter = 0
+
+                    for (snapshot in dataSnapshot.children)
+                    {
+                        val post = snapshot.getValue(Post::class.java)!!
+                        if (post.getPublisher() == profileId)
+
+                        {
+                        postCounter++
+
+                        }
+
+                    }
+                    total_posts.text = "" + postCounter
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        }
+
+
+    }
