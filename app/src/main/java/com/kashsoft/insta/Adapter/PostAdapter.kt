@@ -66,6 +66,7 @@ private var firebaseUser: FirebaseUser?= null
         numberOfLikes(holder.likes, post.getPostid())
         getTotalComments(holder.comments, post.getPostid())
 
+        checkSavedStatus(post.getPostid(), holder.saveButton)
 
         holder.likeButton.setOnClickListener {
             if (holder.likeButton.tag == "Like")
@@ -103,6 +104,28 @@ private var firebaseUser: FirebaseUser?= null
             intentComment.putExtra("postId", post.getPostid())
             intentComment.putExtra("publisherId", post.getPublisher())
             mContext.startActivity(intentComment)
+        }
+
+        holder.saveButton.setOnClickListener {
+          if (holder.saveButton.tag == "Save")
+          {
+              FirebaseDatabase.getInstance().reference
+                  .child("Saves")
+                  .child(firebaseUser!!.uid)
+                  .child(post.getPostid())
+                  .setValue(true)
+          }
+            else
+            {
+                FirebaseDatabase.getInstance().reference
+                    .child("Saves")
+                    .child(firebaseUser!!.uid)
+                    .child(post.getPostid())
+                    .removeValue()
+          }
+
+
+
         }
 
     }
@@ -244,7 +267,34 @@ private var firebaseUser: FirebaseUser?= null
 
         })
     }
+private fun checkSavedStatus(postid: String, imageView: ImageView)
+{
+
+    val saveRef=FirebaseDatabase.getInstance().reference
+        .child("Saves")
+        .child(firebaseUser!!.uid)
 
 
+    saveRef.addValueEventListener(object : ValueEventListener{
+
+        override fun onDataChange(po: DataSnapshot) {
+         if (po.child(postid).exists())
+         {
+             imageView.setImageResource(R.drawable.save_large_icon)
+             imageView.tag = "Saved"
+
+         }else
+         {
+             imageView.setImageResource(R.drawable.save_unfilled_large_icon)
+             imageView.tag = "Save"
+         }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+    })
+
+}
 
 }
