@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,9 @@ class ProfileFragment : Fragment() {
 
     var postList: List<Post>? =null
     var myImagesAdapter : MyImagesAdapter?=null
+    var myImagesAdapterSavedImg : MyImagesAdapter?=null
+    var postListSaved: List<Post>? =null
+    var mySavesImg: List<String>? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +75,7 @@ class ProfileFragment : Fragment() {
         }
 
 
+        // recycler View for uploaded Images
 
         var recylerViewUploadImages: RecyclerView
         recylerViewUploadImages = view.findViewById(R.id.recyler_view_upload_pic)
@@ -80,7 +85,45 @@ class ProfileFragment : Fragment() {
         postList = ArrayList()
         myImagesAdapter = context?.let {MyImagesAdapter (it, postList as ArrayList<Post>) }
         recylerViewUploadImages.adapter = myImagesAdapter
-        
+
+
+
+        // recycler view for saveed images
+        var recylerViewSavedImages: RecyclerView
+        recylerViewSavedImages = view.findViewById(R.id.recyler_view_saved_pic)
+        recylerViewSavedImages.setHasFixedSize(true)
+        val linearLayoutManager2 : LinearLayoutManager = GridLayoutManager(context, 3)
+        recylerViewSavedImages.layoutManager = linearLayoutManager2
+        postListSaved = ArrayList()
+        myImagesAdapterSavedImg = context?.let {MyImagesAdapter (it, postListSaved as ArrayList<Post>) }
+        recylerViewSavedImages.adapter = myImagesAdapterSavedImg
+
+
+
+        // BY DEFAULT USER COME PROFILE PAGE UPLOADED PICTURE SHOULD BE SHOWED AS DEFAULT
+
+        val uploadedImagesBtn : ImageButton
+        uploadedImagesBtn = view.findViewById(R.id.images_grid_view_btn)
+        uploadedImagesBtn.setOnClickListener{
+            recylerViewSavedImages.visibility = View.GONE
+            recylerViewUploadImages.visibility = View.VISIBLE
+        }
+
+
+        val savveImagesBtn : ImageButton
+        savveImagesBtn = view.findViewById(R.id.images_save_btn)
+        uploadedImagesBtn.setOnClickListener{
+            recylerViewSavedImages.visibility = View.VISIBLE
+            recylerViewUploadImages.visibility = View.GONE
+        }
+
+
+
+
+
+
+
+
         view.edit_account_setting_btn.setOnClickListener {
             val getButtonText = view.edit_account_setting_btn.text.toString()
             when{
@@ -121,6 +164,7 @@ class ProfileFragment : Fragment() {
         userInfo()
         myPhotos()
         getTotalNumberOfPosts()
+        mySaves()
         return view
     }
 
@@ -324,5 +368,62 @@ class ProfileFragment : Fragment() {
 
         }
 
+private fun mySaves()
+{
+    mySavesImg = ArrayList()
+    val saveRef= FirebaseDatabase.getInstance()
+        .reference
+        .child("Saves").child(firebaseUser.uid)
 
+    saveRef.addValueEventListener(object : ValueEventListener{
+
+        override fun onDataChange(datasnapshot: DataSnapshot) {
+
+
+            if (datasnapshot.exists()){
+                for (snapshot in datasnapshot.children)
+                {
+                    (mySavesImg as ArrayList<String>).add(snapshot.key!!)
+                }
+                readSavedImgData()
+            }
+        }
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+
+    })
+}
+
+    private fun readSavedImgData()
+    {
+        val postRef = FirebaseDatabase.getInstance().reference.child("Posts")
+        postRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(datasnapshot: DataSnapshot) {
+            if (datasnapshot.exists())
+            {
+                (postListSaved as ArrayList<Post>).clear()
+
+                for (snapshot in datasnapshot.children)
+                {
+                    val post = snapshot.getValue(Post::class.java)
+
+                    for (key in mySavesImg!!)
+                    {
+                        if (post!!.getPostid() ==key)
+                        {
+                            ( postListSaved as ArrayList<Post>).add(post!!)
+                        }
+                    }
+                }
+                myImagesAdapterSavedImg!!.notifyDataSetChanged()
+            }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
+}
