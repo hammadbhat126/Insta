@@ -102,6 +102,10 @@ class ProfileFragment : Fragment() {
 
         // BY DEFAULT USER COME PROFILE PAGE UPLOADED PICTURE SHOULD BE SHOWED AS DEFAULT
 
+        recylerViewSavedImages.visibility = View.GONE
+        recylerViewUploadImages.visibility = View.VISIBLE
+
+
         val uploadedImagesBtn : ImageButton
         uploadedImagesBtn = view.findViewById(R.id.images_grid_view_btn)
         uploadedImagesBtn.setOnClickListener{

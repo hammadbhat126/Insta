@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Insta">
-
+        <activity
+            android:name=".ShowUsersActivity"
+            android:exported="false" />
         <activity
             android:name=".CommentsActivity"
             android:exported="false" />
