@@ -10,6 +10,7 @@ import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,6 +24,7 @@ import com.kashsoft.insta.MainActivity
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
+import com.kashsoft.insta.ShowUsersActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_account_setting.*
@@ -92,6 +94,15 @@ private var firebaseUser: FirebaseUser?= null
 
             }
         }
+
+        holder.likes.setOnClickListener {
+            val intent = Intent(mContext, ShowUsersActivity::class.java)
+            intent.putExtra("id", post.getPostid())
+            intent.putExtra("title", "following")
+            mContext.startActivity(intent)
+        }
+
+
         //  Comment on Pictures
                 holder.commentButton.setOnClickListener {
                     val intentComment = Intent(mContext, CommentsActivity::class.java)

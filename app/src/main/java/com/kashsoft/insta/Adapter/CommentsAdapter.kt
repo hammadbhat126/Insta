@@ -75,12 +75,12 @@ class CommentAdapter(private val mCoontext: Context,
                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.app_ic).into(imageProfile)
 
 
-                   userNameTV.text = user!!.getUsername()
+                   userNameTV.text = user.getUsername()
                }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
 

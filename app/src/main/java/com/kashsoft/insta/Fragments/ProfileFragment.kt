@@ -25,6 +25,7 @@ import com.kashsoft.insta.Adapter.MyImagesAdapter
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
+import com.kashsoft.insta.ShowUsersActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
@@ -114,8 +115,8 @@ class ProfileFragment : Fragment() {
         }
 
 
-        val savveImagesBtn : ImageButton
-        savveImagesBtn = view.findViewById(R.id.images_save_btn)
+        val saveImagesBtn : ImageButton
+        saveImagesBtn = view.findViewById(R.id.images_save_btn)
         uploadedImagesBtn.setOnClickListener{
             recylerViewSavedImages.visibility = View.VISIBLE
             recylerViewUploadImages.visibility = View.GONE
@@ -125,7 +126,21 @@ class ProfileFragment : Fragment() {
 
 
 
+     view.total_fallowers.setOnClickListener {
+            val intent = Intent(context, ShowUsersActivity::class.java)
+            intent.putExtra("id", profileId)
+            intent.putExtra("title", "followers")
+            startActivity(intent)
+        }
 
+
+
+        view.total_fallowing.setOnClickListener {
+            val intent = Intent(context, ShowUsersActivity::class.java)
+            intent.putExtra("id", profileId)
+            intent.putExtra("title", "following")
+            startActivity(intent)
+        }
 
 
         view.edit_account_setting_btn.setOnClickListener {
