@@ -31,6 +31,7 @@
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.27685185185185185" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1648148148148148" />
+        <entry key="app/src/main/res/layout/notification_item_layout.xml" value="0.1675925925925926" />
         <entry key="app/src/main/res/layout/posts_layout.xml" value="0.4661458333333333" />
         <entry key="app/src/main/res/layout/user_item_layout.xml" value="0.27685185185185185" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.13148148148148148" />
