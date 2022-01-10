@@ -59,6 +59,7 @@ class CommentsActivity : AppCompatActivity() {
         userInfo()
        readComments()
         getPostImage()
+        addNotifications()
 
         post_comment.setOnClickListener (View.OnClickListener {
             if (add_comment!!.text.toString() == "")
@@ -170,4 +171,18 @@ private  fun readComments(){
 
     })
 }
+
+    private fun addNotifications()
+    {
+     val postRef = FirebaseDatabase.getInstance()
+         .reference.child("Posts")
+         .child(publisherId)
+
+        val notiMap = HashMap<String, Any>()
+        notiMap["userid"] = firebaseUser!!.uid
+        notiMap["test"] = "commented: " + add_comment!!.text.toString()
+        notiMap["postid"] = postId
+        notiMap["ispost"] = true
+
+    }
 }

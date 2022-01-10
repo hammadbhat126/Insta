@@ -21,6 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class CommentAdapter(private val mCoontext: Context,
 
+
                      private val mComment:MutableList<Comment>?): RecyclerView.Adapter<CommentAdapter.ViewHolder>()
 {
 
