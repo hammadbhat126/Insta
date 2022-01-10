@@ -28,6 +28,7 @@ import com.kashsoft.insta.ShowUsersActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_account_setting.*
+import kotlinx.android.synthetic.main.activity_comments.*
 
 class PostAdapter
     (private  val mContext: Context,
@@ -78,6 +79,7 @@ private var firebaseUser: FirebaseUser?= null
                     .child(post.getPostid())
                     .child(firebaseUser!!.uid)
                     .setValue(true)
+                addNotification(post.getPublisher(),post.getPostid())
 
             }else
             {
@@ -308,4 +310,19 @@ private fun checkSavedStatus(postid: String, imageView: ImageView)
 
 }
 
+
+    private fun addNotification(userId:String , postId: String)
+    {
+        val notiRef = FirebaseDatabase.getInstance()
+            .reference.child("Notifications")
+            .child(userId)
+
+        val notiMap = HashMap<String, Any>()
+        notiMap["userid"] =firebaseUser!!.uid
+        notiMap["test"] = "like your post"
+        notiMap["postid"] = postId
+        notiMap["ispost"] = true
+
+        notiRef.push().setValue(notiMap)
+    }
 }

@@ -174,9 +174,9 @@ private  fun readComments(){
 
     private fun addNotifications()
     {
-     val postRef = FirebaseDatabase.getInstance()
-         .reference.child("Posts")
-         .child(publisherId)
+     val notiRef = FirebaseDatabase.getInstance()
+         .reference.child("Notifications")
+         .child(publisherId!!)
 
         val notiMap = HashMap<String, Any>()
         notiMap["userid"] = firebaseUser!!.uid
@@ -184,5 +184,6 @@ private  fun readComments(){
         notiMap["postid"] = postId
         notiMap["ispost"] = true
 
+        notiRef.push().setValue(notiMap)
     }
 }

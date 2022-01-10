@@ -35,7 +35,7 @@ init {
 
         holder.postImage.setOnClickListener {
             val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE ).edit()
-            editor.putString("posId" , post.getPostid())
+            editor.putString("postId" , post.getPostid())
             editor.apply()
             (mContext as  FragmentActivity).supportFragmentManager.beginTransaction().
             replace(R.id.fragment_container, PostDetailsFragment()).commit()

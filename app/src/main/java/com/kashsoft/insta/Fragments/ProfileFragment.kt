@@ -157,7 +157,10 @@ class ProfileFragment : Fragment() {
                         FirebaseDatabase.getInstance().reference
                             .child("Follow").child(profileId)
                             .child("Followers").child(it1.toString())
+                            .setValue(true)
                     }
+                    addNotification()
+
                 }
 
                 getButtonText =="Following" -> {
@@ -444,5 +447,19 @@ private fun mySaves()
                 TODO("Not yet implemented")
             }
         })
+    }
+    private fun addNotification()
+    {
+        val notiRef = FirebaseDatabase.getInstance()
+            .reference.child("Notifications")
+            .child(profileId)
+
+        val notiMap = HashMap<String, Any>()
+        notiMap["userid"] =firebaseUser!!.uid
+        notiMap["test"] = "started following you"
+        notiMap["postid"] = ""
+        notiMap["ispost"] = false
+
+        notiRef.push().setValue(notiMap)
     }
 }

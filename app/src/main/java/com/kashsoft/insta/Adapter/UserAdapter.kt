@@ -1,6 +1,7 @@
 package com.kashsoft.insta.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.kashsoft.insta.Fragments.ProfileFragment
+import com.kashsoft.insta.MainActivity
 
 import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
@@ -50,12 +52,22 @@ class UserAdapter (private var mContext: Context,
         checkFollowingStatus(user.getUID(), holder.followButton)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
-            val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-            pref.putString("profileId", user.getUID())
-            pref.apply()
 
-            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ProfileFragment()).commit()
+
+            if (isFragment)
+            {
+                val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+                pref.putString("profileId", user.getUID())
+                pref.apply()
+
+                (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ProfileFragment()).commit()
+            }
+            else{
+                val intent = Intent(mContext, MainActivity::class.java)
+                intent.putExtra("publisherId", user.getUID())
+                mContext.startActivity(intent)
+            }
         })
 
         holder.followButton.setOnClickListener {
@@ -84,6 +96,8 @@ class UserAdapter (private var mContext: Context,
                            }
                        }
                }
+                    addNotification(user.getUID() )
+
             }
             else{
 
@@ -154,5 +168,19 @@ class UserAdapter (private var mContext: Context,
 
             }
         })
+    }
+    private fun addNotification(userId:String )
+    {
+        val notiRef = FirebaseDatabase.getInstance()
+            .reference.child("Notifications")
+            .child(userId)
+
+        val notiMap = HashMap<String, Any>()
+        notiMap["userid"] =firebaseUser!!.uid
+        notiMap["test"] = "started following you"
+        notiMap["postid"] = ""
+        notiMap["ispost"] = false
+
+        notiRef.push().setValue(notiMap)
     }
 }
