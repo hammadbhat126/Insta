@@ -1,4 +1,4 @@
-package com.kashsoft.insta.Fragments
+package com.kashsoft.insta.Adapter
 
 import android.content.Context
 import android.view.View

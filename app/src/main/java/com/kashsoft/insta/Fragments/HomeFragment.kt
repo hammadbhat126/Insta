@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.kashsoft.insta.Adapter.PostAdapter
+import com.kashsoft.insta.Adapter.StoryAdapter
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.R
 
