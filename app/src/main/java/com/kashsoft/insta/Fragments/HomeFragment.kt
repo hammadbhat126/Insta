@@ -13,16 +13,19 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.kashsoft.insta.Adapter.PostAdapter
+import com.kashsoft.insta.Adapter.StoryAdapter
 import com.kashsoft.insta.Model.Post
+import com.kashsoft.insta.Model.Story
 import com.kashsoft.insta.R
 
 class HomeFragment : Fragment() {
 
     private var postAdapter : PostAdapter? = null
     private var postList : MutableList<Post>? = null
-    private var followingList: MutableList<Post>? = null
+    private var followingList: MutableList<String>? = null
 
     private var storyAdapter : StoryAdapter? = null
+    private var storyList : MutableList<Story>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +47,7 @@ class HomeFragment : Fragment() {
         val linearLayoutManager2 = LinearLayoutManager(context)
         linearLayoutManager2.reverseLayout = true
         linearLayoutManager2.stackFromEnd = true
-        recyclerView.layoutManager = linearLayoutManager2
+        recyclerViewStory.layoutManager = linearLayoutManager2
 
 
 
@@ -53,6 +56,10 @@ class HomeFragment : Fragment() {
         postList = ArrayList()
         postAdapter = context?.let { PostAdapter(it, postList as ArrayList<Post>) }
         recyclerView.adapter = postAdapter
+
+       storyList = ArrayList()
+       storyAdapter = context?.let { StoryAdapter(it, storyList as ArrayList<Story>) }
+        recyclerViewStory.adapter = storyAdapter
 
         checkFollowings()
 
@@ -79,6 +86,7 @@ class HomeFragment : Fragment() {
                  }
 
                  retrievePosts()
+                 retrieveStories()
              }
            }
 
@@ -118,6 +126,45 @@ class HomeFragment : Fragment() {
             }
         })
     }
+  private fun retrieveStories(){
+      val storyRef = FirebaseDatabase.getInstance().reference.child("Stories")
+      storyRef.addValueEventListener(object: ValueEventListener{
+
+
+          override fun onDataChange(datasnapshot: DataSnapshot) {
+            val timeCurrent = System.currentTimeMillis()
+              (storyList as ArrayList<Story>).clear()
+              (storyList as ArrayList<Story>).add(Story("",0,0, "", FirebaseAuth
+                  .getInstance().currentUser!!.uid))
+
+
+              for (id in followingList!!)
+              {
+                  var countStory = 0
+                  var story: Story? = null
+                  for (snapshot in datasnapshot.child(id).children)
+                  {
+                      story = snapshot.getValue(Story::class.java)
+                      if (timeCurrent>story!!.getTimeStart() && timeCurrent<story!!.getTimeEnd())
+                      {
+                          countStory++
+                      }
+                  }
+                  if (countStory>0){
+                      (storyList as ArrayList<Story>).add(story!!)
+                  }
+              }
+              storyAdapter!!.notifyDataSetChanged()
+          }
+
+          override fun onCancelled(error: DatabaseError) {
+              TODO("Not yet implemented")
+          }
+
+
+      } )
+  }
+
 }
 
 

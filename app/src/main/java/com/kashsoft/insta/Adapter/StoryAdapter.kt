@@ -1,6 +1,7 @@
-package com.kashsoft.insta.Fragments
+package com.kashsoft.insta.Adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,20 +18,34 @@ private val mStory: List<Story>):RecyclerView.Adapter<StoryAdapter.ViewHolder>()
 
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+return if (viewType== 0)
+ {
+     val view = LayoutInflater.from(mContext).inflate(R.layout.add_story_item, parent, false)
+    ViewHolder(view)
+ }else {
+
+     val view = LayoutInflater.from(mContext).inflate(R.layout.story_item, parent, false)
+ ViewHolder(view)
+ }
+
+    }
+
+
+    override fun getItemCount(): Int {
+  return  mStory.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
+
+        val story = mStory[position]
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
 
 
         // Story item
-    inner class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
+        {
             var story_image_seen: CircleImageView? = null
             var story_image: CircleImageView? = null
             var story_username : TextView? = null
