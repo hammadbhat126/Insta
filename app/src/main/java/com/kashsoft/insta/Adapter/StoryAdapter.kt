@@ -1,16 +1,27 @@
 package com.kashsoft.insta.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.kashsoft.insta.AddStoryActivity
+import com.kashsoft.insta.MainActivity
 import com.kashsoft.insta.Model.Story
+import com.kashsoft.insta.Model.User
 import com.kashsoft.insta.R
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class StoryAdapter (private val mContext: Context,
 private val mStory: List<Story>):RecyclerView.Adapter<StoryAdapter.ViewHolder>()
@@ -39,6 +50,19 @@ return if (viewType== 0)
 
 
         val story = mStory[position]
+
+
+        userInfo(holder, story.getUserId(), position)  // caling user info
+
+
+        holder.itemView.setOnClickListener {
+
+
+            val intent = Intent(mContext, AddStoryActivity::class.java)
+            intent.putExtra("userid", story.getUserId())
+           mContext.startActivity(intent)
+
+        }
     }
 
 
@@ -80,5 +104,35 @@ return if (viewType== 0)
         return 1
     }
 
+    private fun userInfo(viewHolder: ViewHolder, userId: String, position: Int){
+        val usersRef= FirebaseDatabase.getInstance().getReference().child("Users").child(userId)
+
+        usersRef.addValueEventListener(object: ValueEventListener
+        {
+            override fun onDataChange(po: DataSnapshot) {
+
+// note 25.40
+
+                if (po.exists()){
+                    val user = po.getValue<User>(User::class.java)
+
+                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
+                        .into(viewHolder.story_image)
+
+
+                    if (position!=0)
+                    {
+                        Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
+                            .into(viewHolder.story_image_seen)
+                        viewHolder.story_username!!.text= user.getUsername()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
 
 }

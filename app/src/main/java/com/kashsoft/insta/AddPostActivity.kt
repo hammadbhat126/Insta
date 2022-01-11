@@ -64,65 +64,6 @@ class AddPostActivity : AppCompatActivity() {
 
     private fun uploadImage() {
 
-        when{
-            imageUri == null -> Toast.makeText(this, "Please Select Image first", Toast.LENGTH_LONG)
-                .show()
 
-            TextUtils.isEmpty(description_post.text.toString()) ->
-                Toast.makeText(this, "Please Write Description First", Toast.LENGTH_LONG).show()
-            else ->{
-                val progressDialog = ProgressDialog(this)
-                progressDialog.setTitle("Adding New Post")
-                progressDialog.setMessage("Please wait we are adding your ...")
-                progressDialog.show()
-
-                val fileRef = storagePostPicRef!!
-                    .child(System.currentTimeMillis().toString() + ".jpg")
-                var uploadTask: StorageTask<*>
-                uploadTask = fileRef.putFile(imageUri!!)
-
-                uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                    if (task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                            progressDialog.dismiss()
-                        }
-                    }
-                    return@Continuation fileRef.downloadUrl
-                }).addOnCompleteListener(OnCompleteListener<Uri> { task ->
-
-                    if (task.isSuccessful) {
-                        val downloadUrl = task.result
-                        myUrl = downloadUrl.toString()
-
-                        val ref = FirebaseDatabase.getInstance().reference.child("Posts")
-                        val postId = ref.push().key
-
-                        val postMap = HashMap<String, Any>()
-                        postMap["postid"] = postId!!
-                        postMap["description"] = description_post.text.toString().toLowerCase()
-                        postMap["publisher"] = FirebaseAuth.getInstance().currentUser!!.uid
-                        postMap["postimage"] = myUrl
-
-                        ref.child(postId).updateChildren(postMap)
-
-                        Toast.makeText(
-                            this,
-                            "Post Upload Succesfuly.",
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-
-                        val intent = Intent(this@AddPostActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                        progressDialog.dismiss()
-
-                    } else {
-                        progressDialog.dismiss()
-                    }
-                })
-            }
-        }
     }
 }
