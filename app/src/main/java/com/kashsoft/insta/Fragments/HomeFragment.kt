@@ -22,6 +22,8 @@ class HomeFragment : Fragment() {
     private var postList : MutableList<Post>? = null
     private var followingList: MutableList<Post>? = null
 
+    private var storyAdapter : StoryAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +37,17 @@ class HomeFragment : Fragment() {
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
         recyclerView.layoutManager = linearLayoutManager
+
+
+        var recyclerViewStory : RecyclerView? = null
+        recyclerViewStory = view.findViewById(R.id.recyler_view_story)
+        val linearLayoutManager2 = LinearLayoutManager(context)
+        linearLayoutManager2.reverseLayout = true
+        linearLayoutManager2.stackFromEnd = true
+        recyclerView.layoutManager = linearLayoutManager2
+
+
+
 
 
         postList = ArrayList()
