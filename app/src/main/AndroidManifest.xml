@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Insta">
         <activity
+            android:name=".StoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddStoryActivity"
             android:exported="false" />
         <activity
