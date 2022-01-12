@@ -92,8 +92,12 @@ class AddStoryActivity : AppCompatActivity() {
                         val downloadUrl = task.result
                         myUrl = downloadUrl.toString()
 
-                        val ref = FirebaseDatabase.getInstance().reference.child("Story")
-                        val storyid = (ref.push().key).toString()
+                        val ref = FirebaseDatabase.getInstance()
+                            .reference.child("Story")
+                            .child(FirebaseAuth.getInstance()
+                                .currentUser!!.uid)
+
+                        val storyId = (ref.push().key).toString()
 
                         val timeEnd = System.currentTimeMillis() + 8640000 // one day later
 
@@ -105,10 +109,10 @@ class AddStoryActivity : AppCompatActivity() {
                         storyMap["timestart"] = ServerValue.TIMESTAMP
                         storyMap["timeend"] = timeEnd
                         storyMap["imageurl"] = myUrl
-                        storyMap["storyid"] = storyid
+                        storyMap["storyid"] = storyId
 
 
-                        ref.child(storyid).updateChildren(storyMap)
+                        ref.child(storyId).updateChildren(storyMap)
 
                         Toast.makeText(
                             this,

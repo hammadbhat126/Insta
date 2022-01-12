@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.kashsoft.insta.CommentsActivity
+import com.kashsoft.insta.Fragments.PostDetailsFragment
+import com.kashsoft.insta.Fragments.ProfileFragment
 import com.kashsoft.insta.MainActivity
 import com.kashsoft.insta.Model.Post
 import com.kashsoft.insta.Model.User
@@ -68,8 +71,49 @@ private var firebaseUser: FirebaseUser?= null
 
         numberOfLikes(holder.likes, post.getPostid())
         getTotalComments(holder.comments, post.getPostid())
-
         checkSavedStatus(post.getPostid(), holder.saveButton)
+
+            holder.profileImage.setOnClickListener {
+
+
+                val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE ).edit()
+                editor.putString("postId" , post.getPostid())
+                editor.apply()
+                (mContext as FragmentActivity).supportFragmentManager.beginTransaction().
+                replace(R.id.fragment_container, PostDetailsFragment()).commit()
+            }
+
+
+        holder.publisher.setOnClickListener {
+            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE ).edit()
+            editor.putString("profileId" , post.getPublisher())
+            editor.apply()
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction().
+            replace(R.id.fragment_container, ProfileFragment()).commit()
+        }
+
+        holder.profileImage.setOnClickListener {
+            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE ).edit()
+            editor.putString("profileId" , post.getPublisher())
+            editor.apply()
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction().
+            replace(R.id.fragment_container, ProfileFragment()).commit()
+        }
+
+        holder.postImage .setOnClickListener {
+
+            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE ).edit()
+            editor.putString("postId" , post.getPostid())
+            editor.apply()
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction().
+            replace(R.id.fragment_container, PostDetailsFragment()).commit()
+        }
+
+
+
+
+
+
 
         holder.likeButton.setOnClickListener {
             if (holder.likeButton.tag == "Like")

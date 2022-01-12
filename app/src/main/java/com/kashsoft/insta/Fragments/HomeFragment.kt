@@ -35,30 +35,28 @@ class HomeFragment : Fragment() {
       val view =  inflater.inflate(R.layout.fragment_home, container, false)
 
         var recyclerView :RecyclerView?= null
+        var recyclerViewStory : RecyclerView? = null
+
         recyclerView = view.findViewById(R.id.recyler_view_home)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
         recyclerView.layoutManager = linearLayoutManager
 
-
-        var recyclerViewStory : RecyclerView? = null
-        recyclerViewStory = view.findViewById(R.id.recyler_view_story)
-        val linearLayoutManager2 = LinearLayoutManager(context)
-        linearLayoutManager2.reverseLayout = true
-        linearLayoutManager2.stackFromEnd = true
-        recyclerViewStory.layoutManager = linearLayoutManager2
-
-
-
-
-
         postList = ArrayList()
         postAdapter = context?.let { PostAdapter(it, postList as ArrayList<Post>) }
         recyclerView.adapter = postAdapter
 
-       storyList = ArrayList()
-       storyAdapter = context?.let { StoryAdapter(it, storyList as ArrayList<Story>) }
+
+
+
+        recyclerViewStory = view.findViewById(R.id.recyler_view_story)
+        recyclerView.setHasFixedSize(true)
+        val linearLayoutManager2 = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewStory.layoutManager = linearLayoutManager2
+
+        storyList = ArrayList()
+        storyAdapter = context?.let { StoryAdapter(it, storyList as ArrayList<Story>) }
         recyclerViewStory.adapter = storyAdapter
 
         checkFollowings()
@@ -127,7 +125,7 @@ class HomeFragment : Fragment() {
         })
     }
   private fun retrieveStories(){
-      val storyRef = FirebaseDatabase.getInstance().reference.child("Stories")
+      val storyRef = FirebaseDatabase.getInstance().reference.child("Story")
       storyRef.addValueEventListener(object: ValueEventListener{
 
 
